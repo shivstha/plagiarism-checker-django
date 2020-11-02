@@ -89,14 +89,18 @@ WSGI_APPLICATION = 'plagiarismchecker.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'plagiarism_db',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT': 5432
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'plagcheck',
+        'USER': 'root',
+        'PASSWORD': 'shova',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
     }
 }
+
 
 
 # Password validation

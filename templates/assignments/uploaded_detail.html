@@ -2,5 +2,12 @@
 {% block title %}{{ uploaded.assignment.title }}{% endblock title %}
 {% block content %}
         <h1>{{ uploaded.assignment.title }}</h1>
+        <p>Submitted to : {{ uploaded.assignment.by_teacher.get_full_name|default:uploaded.assignment.by_teacher.username }} sir</p>
+        <p>Submitted date : {{ uploaded.uploaded_date }}</p>
+
+        <div class="form-group" style="width: 750px">
+            <label for="exampleFormControlTextarea3"><p>File : {{ uploaded.upload_file }}</p></label>
+            <textarea class="form-control" id="exampleFormControlTextarea3" rows="12">{{ text }}</textarea>
+        </div>
 {% endblock content %}
 

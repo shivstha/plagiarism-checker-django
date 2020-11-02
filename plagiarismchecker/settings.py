@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 's$1g1i7p=+)(hon5!e$=qis#ado$e@*^_a9bd8^4mdd*1h8%-@'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -39,12 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
-    #Third-party
+    # Third-party
     'crispy_forms',
     'allauth',
     'allauth.account',
 
-    #local
+    # local
     'users.apps.UsersConfig',
     'pages.apps.PagesConfig',
     'assignments.apps.AssignmentsConfig',
@@ -83,21 +81,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'plagiarismchecker.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'plagiarism_db',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT': 5432
-    }
+    'default':
+        {'ENGINE': 'django.db.backends.mysql',
+         'NAME': 'plagcheck', 'USER': 'root',
+         'PASSWORD': 'shova',
+         'HOST': '127.0.0.1',
+         'PORT': '3306',
+         'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"}
+         }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -117,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -130,7 +125,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
@@ -146,16 +140,15 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 ACCOUNT_FORMS = {'signup': 'users.forms.MyCustomSignupForm'}
 
-
 LOGIN_REDIRECT_URL = 'assignment_list'
 ACCOUNT_LOGOUT_REDIRECT = 'home'
 
 SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = (
-        'django.contrib.auth.backends.ModelBackend',
-        'allauth.account.auth_backends.AuthenticationBackend',
-        )
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

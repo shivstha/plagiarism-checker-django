@@ -2,19 +2,20 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 import uuid
+from college.models import Subject
 from django.core.validators import FileExtensionValidator
 
 
-class Assignment(models.Model):
+class GiveAssignment(models.Model):
     id = models.UUIDField(primary_key=True,
                           default=uuid.uuid4,
                           editable=False)
+    subject = models.ForeignKey(
+        Subject, on_delete=models.CASCADE, related_name="subject_assignment")
     title = models.CharField(max_length=200)
-    description = models.CharField(max_length=600)
+    description = models.TextField(blank=True)
     date = models.DateTimeField(auto_now_add=True)
     deadline = models.DateField()
-    by_teacher = models.ForeignKey(get_user_model(),
-                                   on_delete=models.CASCADE, )
 
     class Meta:
         ordering = ('-date',)
@@ -35,15 +36,26 @@ def user_directory_path(instance, filename):
     return 'assignments/user_{0}/{1}'.format(instance.student.username, filename)
 
 
-class UploadedAssignment(models.Model):
+class UploadAssignment(models.Model):
+    STATUS = (
+        ('pending', 'Pending'),
+        ('accepted', 'Accepted'),
+        ('rejected', 'Rejected'),
+    )
     id = models.UUIDField(primary_key=True,
                           default=uuid.uuid4,
                           editable=False)
-    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, related_name='assignment')
-    student = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='assignment_uploaded' )
-    upload_file = models.FileField(upload_to=user_directory_path, validators=[FileExtensionValidator(allowed_extensions=['pdf', 'docx'])])
+    assignment = models.ForeignKey(
+        GiveAssignment, on_delete=models.CASCADE, related_name='upload_assignment')
+    student = models.ForeignKey(
+        get_user_model(), on_delete=models.CASCADE, related_name='upload_by_student')
+    upload_file = models.FileField(upload_to=user_directory_path, validators=[
+        FileExtensionValidator(allowed_extensions=['pdf', 'docx'])])
     uploaded_date = models.DateField(auto_now_add=True,
                                      db_index=True)
+    status = models.CharField(max_length=10,
+                              choices=STATUS,
+                              default='pending')
 
     class Meta:
         ordering = ('-uploaded_date',)

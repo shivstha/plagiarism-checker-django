@@ -1,21 +1,21 @@
 from django.contrib import admin
-from .models import Assignment, UploadedAssignment
+from .models import GiveAssignment, UploadAssignment
 
 
 class UploadAssignmentInline(admin.TabularInline):
-    model = UploadedAssignment
+    model = UploadAssignment
 
 
 class AssignmentAdmin(admin.ModelAdmin):
     inlines = [
         UploadAssignmentInline,
     ]
-    list_display = ("title", "by_teacher", "date", "deadline")
+    list_display = ("title", "subject", "date", "deadline")
 
 
-admin.site.register(Assignment, AssignmentAdmin, )
+admin.site.register(GiveAssignment, AssignmentAdmin, )
 
 
-@admin.register(UploadedAssignment)
+@admin.register(UploadAssignment)
 class UploadedAssignmentAdmin(admin.ModelAdmin):
     list_display = ['assignment', 'student', 'uploaded_date']

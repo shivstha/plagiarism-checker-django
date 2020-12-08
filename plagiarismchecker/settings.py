@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'pages.apps.PagesConfig',
     'assignments.apps.AssignmentsConfig',
+    'college.apps.CollegeConfig',
 ]
 
 # django-crispy-forms
@@ -106,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kathmandu'
 
 USE_I18N = True
 
@@ -126,9 +127,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
-ACCOUNT_FORMS = {'signup': 'users.forms.MyCustomSignupForm'}
+ACCOUNT_FORMS = {'signup': 'users.forms.MyCustomSignupForm', }
+# 'login': 'users.forms.MyCustomLoginForm'}
 
-LOGIN_REDIRECT_URL = 'assignment_list'
+LOGIN_REDIRECT_URL = 'dashboard'
 ACCOUNT_LOGOUT_REDIRECT = 'home'
 
 SITE_ID = 1
@@ -149,6 +151,7 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
 # ACCOUNT_EMAIL_VERIFICATION = 'none'
+
 ACCOUNT_EMAIL_REQUIRED = True
 
 ACCOUNT_UNIQUE_EMAIL = True
@@ -156,5 +159,3 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 DEFAULT_FROM_EMAIL = 'admin@plagiarismchecker.com'
-
-ACCOUNT_FORMS = {'signup': 'mysite.forms.MyCustomSignupForm'}

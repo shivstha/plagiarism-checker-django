@@ -1,6 +1,9 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 
-# Create your models here.
+I_AM = [('teacher', 'Teacher'),
+        ('student', 'Student')]
+
+
 class CustomUser(AbstractUser):
-    pass
+    i_am = models.CharField(choices=I_AM, default='student', max_length=7)

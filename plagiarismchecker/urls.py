@@ -25,7 +25,7 @@ urlpatterns = [
 
     # local apps
     path('', include('pages.urls'),),
-    path('assignments/', include('assignments.urls'))
+    # path('assignments/', include('assignments.urls'))
 ]
 
 if settings.DEBUG:

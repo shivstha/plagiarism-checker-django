@@ -3,6 +3,7 @@ import os
 import re
 
 import PyPDF2
+import pdfplumber
 from django.contrib import messages
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
@@ -108,17 +109,16 @@ class AssignmentDetailView(FormMixin, DetailView):
 
 
 def extractPDF(filename):
-    pdfFileObj = open(filename, 'rb')
-    pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
-    num_pages = pdfReader.numPages
-    count = 0
     text = ""
-    while count < num_pages:
-        pageObj = pdfReader.getPage(count)
-        count += 1
-        text += pageObj.extractText()
-    if text != "":
-        text = text
+    with pdfplumber.open(filename) as pdf:
+        num_pages = len(pdf.pages)
+        count = 0
+        while count < num_pages:
+            pageObj = pdf.pages[count]
+            count += 1
+            text += pageObj.extract_text()
+        if text != "":
+            text = text
     return text
 
 

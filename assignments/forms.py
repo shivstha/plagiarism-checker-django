@@ -19,3 +19,9 @@ class AssignmentGiveForm(forms.ModelForm):
         widgets = {
             'deadline': DateInput(),
         }
+
+
+class StatusChangeForm(forms.ModelForm):
+    class Meta:
+        model = UploadAssignment
+        fields = ['status']

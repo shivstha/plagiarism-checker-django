@@ -51,8 +51,7 @@ class UploadAssignment(models.Model):
         get_user_model(), on_delete=models.CASCADE, related_name='upload_by_student')
     upload_file = models.FileField(upload_to=user_directory_path, validators=[
         FileExtensionValidator(allowed_extensions=['pdf', 'docx'])])
-    uploaded_date = models.DateField(auto_now_add=True,
-                                     db_index=True)
+    uploaded_date = models.DateField(auto_now_add=True,)
     status = models.CharField(max_length=10,
                               choices=STATUS,
                               default='pending')

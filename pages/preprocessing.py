@@ -1,3 +1,4 @@
+import json
 import re
 import string
 
@@ -63,3 +64,8 @@ def data_processing(text, winSize=4):
             prevMin = currMin
     return fingerprintList
 
+
+# with open("hash_values.txt", 'r') as f:
+#     data = json.loads(f.read())
+#
+# print(data['D:/Plagiarism Checker/plagiarismchecker/assignments/datasets/C Notes.pdf'])

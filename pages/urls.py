@@ -4,7 +4,6 @@ from .views import HomePageView, SubjectListView, AssignmentListView, Assignment
 from assignments.views import give_assignment
 
 # app_name = "pages"
-
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
     path('delete-assignment/<pk>/', delete_assignment, name='delete_ass'),

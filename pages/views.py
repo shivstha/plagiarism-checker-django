@@ -1,3 +1,4 @@
+import json
 import os
 import re
 
@@ -5,11 +6,11 @@ import PyPDF2
 from django.contrib import messages
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import FormMixin
 
-from assignments.forms import AssignmentUploadForm
+from assignments.forms import AssignmentUploadForm, StatusChangeForm
 from assignments.models import GiveAssignment, UploadAssignment
 from college.models import Subject
 from .preprocessing import data_processing
@@ -121,7 +122,7 @@ def extractPDF(filename):
     return text
 
 
-directory = "D:/Plagiarism Checker/plagiarismchecker/assignments/datasets"
+directory = "D:/Plagiarism Checker/plagiarismchecker/pages/hash_value.txt"
 
 
 def check_plagiarism(request, pk):
@@ -132,20 +133,24 @@ def check_plagiarism(request, pk):
 
     x = re.sub("/", " ", filename)
     x = re.split("\s", x)
-    score = []
+    pdf_score = dict()
 
-    for file in os.listdir(directory):
-        if not file.endswith(".pdf"):
-            continue
-        pdf_filename = os.path.join(directory, file)
-        text = extractPDF(pdf_filename)
-        finger_print2 = data_processing(text, 3)
-        similarity = jaccard_similarity(finger_print1, finger_print2)
-        score.append(similarity)
+    with open(directory, 'r') as f:
+        datasets = json.loads(f.read())
+        f.close()
+    for k, v in datasets.items():
+        pdf_score[k] = jaccard_similarity(finger_print1, v)
+
+    score = sorted(pdf_score.items(), key=lambda x: x[1], reverse=True)[:3]
+    form = StatusChangeForm(request.POST or None, request.FILES or None, instance=assignment)
+    if form.is_valid():
+        form.save()
+        return redirect('assignment_detail', pk=assignment.assignment.id)
 
     context = {
         'assignment': assignment,
         'filename': x[2],
         'score': score,
+        'form': form
     }
     return render(request, 'pages/check_plagiarism.html', context)

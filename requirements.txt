@@ -19,7 +19,7 @@ filelock==3.0.12
 idna==2.10
 isort==5.6.4
 lazy-object-proxy==1.4.3
-lxml==4.6.1
+lxml==4.9.1
 mccabe==0.6.1
 mysql-connector-python==8.0.20
 mysqlclient==2.0.1

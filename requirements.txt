@@ -25,7 +25,7 @@ mysql-connector-python==8.0.20
 mysqlclient==2.0.1
 oauthlib==3.1.0
 pipenv==2020.5.28
-protobuf==3.13.0
+protobuf==3.18.3
 psycopg2==2.8.6
 pycodestyle==2.6.0
 pycparser==2.20

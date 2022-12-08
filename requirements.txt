@@ -2,7 +2,7 @@ appdirs==1.4.4
 asgiref @ file:///tmp/build/80754af9/asgiref_1602513567813/work
 astroid==2.4.2
 autopep8==1.5.4
-certifi==2020.6.20
+certifi==2022.12.7
 cffi==1.14.3
 chardet==3.0.4
 colorama==0.4.4
